@@ -1,0 +1,197 @@
+### Generate SSH key with your github email id on your Linux or Windows VM
+############################################################################################################################
+pkasireddy@F604486:~$ ssh-keygen -t rsa -b 4096 -C "pkasireddy@fec.gov"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/pkasireddy/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/pkasireddy/.ssh/id_rsa.
+Your public key has been saved in /home/pkasireddy/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:Mn5nljBRbL0Tni7jhDh7vH32X0IJ9+sqZkvfH5tqdgY pkasireddy@fec.gov
+The key's randomart image is:
++---[RSA 4096]----+
+|         ...     |
+|         .o o    |
+|        .. ..+.  |
+|         .  =o o |
+|      o.S. . .o .|
+|     .oo.o+..E  .|
+|      .+.o=+  oo.|
+|      ..o=o++oo+=|
+|       ...++==**+|
++----[SHA256]-----+
+#############################################################################################################################
+### copy the public key from the file and create  a new SSH key on your github account
+pkasireddy@F604486:~$ cat /home/pkasireddy/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCguIBmNs78rvk5GblFRrkbwDFzftCcjtoXMuKl8hsKQTPgXNhalRJNHp5uJOpbUC8oq1ghc1WMYtslTvF8pUEIIaCifHW6/fNb4tc1Nyks1tugNm98tAzs9w9WPMhgDQN9LArP6KDp86bH5gZTj7HZu2PVbP82NSWdmTEO4myQfkrGnaY37Qe3mHD/Gd2IpQJojyQ0EAs/v2Z2sq2tyhoePxly/Ei71njq2poMHivpSNJuYvNGUkNuFVod8yH5aG6YTCxuCgCdNfISOR6Qdg5trMmfgw5Yn95AWgitNtBB+6ksgdFr2d9fQAmuViM8U/R4lH8F+Tclo1niD74p7uGJ5x04eC5SSNNiaRPuwAQBjYRybDXK0D264Fd0oamaSTfrMfkM8Bq9z+rfIm3+ThtET2HgwgSLhtTXLgrhalcOP8AeB2WQrwVGzETQHCfYp7gS070kyIDPHuAPdOTJo8V3HsGyoV2GZVC4heqKquZCdnBufXgafNu7FoK+7kRyrDV+O5c/l/6x5QN2IkzNAUyOyHw8qRN+/IvjkPwtGuw43eY5FQTRt4RI5CNADQcTwOcWhKvrsnENym5uQ/pTgoaT6fJJB4vb6H5BjDex961+0s6oKivvYsvsE+r8IhuH6ya+YVXGdpEstxU7o+jUqu/IvORFEYSClCmIw0AFKK1QEw== pkasireddy@fec.gov
+pkasireddy@F604486:~$ ls
+Desktop  Documents  Downloads  elasticsearch-1.7.6  elasticsearch-1.7.6.tar.gz  examples.desktop  Music  openFEC  Pictures  Public  pyvenv  Templates  Videos
+pkasireddy@F604486:~$ mv openFEC openFEC_old
+pkasireddy@F604486:~$ ls
+Desktop  Documents  Downloads  elasticsearch-1.7.6  elasticsearch-1.7.6.tar.gz  examples.desktop  Music  openFEC_old  Pictures  Public  pyvenv  Templates  Videos
+##############################################################################################################################
+### Do a git clone of the openFEC project using SSH 
+ pkasireddy@F604486:~$ git clone git@github.com:pkfec/openFEC.git
+Cloning into 'openFEC'...
+Warning: Permanently added the RSA host key for IP address '192.30.253.112' to the list of known hosts.
+remote: Counting objects: 26967, done.
+remote: Total 26967 (delta 0), reused 0 (delta 0), pack-reused 26967
+Receiving objects: 100% (26967/26967), 262.07 MiB | 8.18 MiB/s, done.
+Resolving deltas: 100% (19001/19001), done.
+Checking connectivity... done.
+pkasireddy@F604486:~$ cd openFEC
+pkasireddy@F604486:~/openFEC$ ls
+bin              FECSSP (1).docx  manage.py             manifest_prod.yml   package.json          requirements-locust.txt    scripts                   tests
+CHANGELOG.md     FECSSP.docx      manifest_base.yml     manifest_stage.yml  Procfile              requirements-scrapers.txt  setup.cfg                 utils.py
+CONTRIBUTING.md  LICENSE.md       manifest_dev.yml      newrelic.ini        README.md             requirements.txt           system-security-plan.yml  webservices
+data             locustfile.py    manifest_feature.yml  opencontrol.yaml    requirements-dev.txt  runtime.txt                tasks.py
+#############################################################################################################################
+### Create  branch called "feature/adrs and checkout the new branch"
+pkasireddy@F604486:~/openFEC$ git checkout -b feature/adrs
+M	manage.py
+M	webservices/legal_docs/__init__.py
+Switched to a new branch 'feature/adrs'
+pkasireddy@F604486:~/openFEC$ git add
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
+pkasireddy@F604486:~/openFEC$ git log
+commit 397aa191617460784a0bf4081b270cf4de144942
+Merge: cf0b5cc b737cc1
+Author: Carlo Costino <ccostino@users.noreply.github.com>
+Date:   Thu Dec 29 17:49:19 2016 -0500
+
+    Merge pull request #2128 from 18F/feature/raw-sked-e-endpoint
+    
+    Feature/raw sked e endpoint
+
+commit b737cc129557e00b8080b13da0b938bab0ca65b9
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 17:34:12 2016 -0500
+
+    Added subset data, fixed n+1 error by commenting out join to get canidadate info, not a problem since that info was bonus as is
+
+commit f3fd56bafacccd74e596521c62dd818e2e5c9ec0
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 15:52:59 2016 -0500
+
+    Removed print statement and resolve MRO
+
+commit ec7b9517defb95dde3fac72349147bfb05655ee9
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 15:39:01 2016 -0500
+
+    Added report_year column and corresponding cycle column (this was an added plus, wasn't specified in completion criteria)
+
+commit cf0b5cc25c80193500f6f12987ad819d0a7959cd
+Merge: f310a5c a6b55c4
+Author: Carlo Costino <ccostino@users.noreply.github.com>
+Date:   Thu Dec 29 13:36:08 2016 -0500
+
+    Merge pull request #2113 from 18F/feature/add-amended-flags
+    
+    Feature/add amended flags
+
+commit b1d4d226d96f51087d9bad5fc336baaca448f1af
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 13:08:59 2016 -0500
+
+    Added efiling implementation documentation tag for the endpoint
+
+commit 6b4b11205d93919a56907a4b20349198e459ee34
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 12:06:23 2016 -0500
+#######################################################################################################################
+### check if any files have been newly added or modified in your local workspace:
+pkasireddy@F604486:~/openFEC$ git status
+On branch feature/adrs
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   manage.py
+	modified:   webservices/legal_docs/__init__.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	tests/test_load_current_adrs.py
+	webservices/legal_docs/current_adrs.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+###########################################################################################################################
+### add each file before you commit
+pkasireddy@F604486:~/openFEC$ git add manage.py 
+pkasireddy@F604486:~/openFEC$ git add webservices/legal_docs/__init__.py 
+pkasireddy@F604486:~/openFEC$ git add tests/test_load_current_adrs.py
+pkasireddy@F604486:~/openFEC$ git add webservices/legal_docs/current_adrs.py
+###########################################################################################################################
+### commit the files.
+pkasireddy@F604486:~/openFEC$ git commit 
+[feature/adrs 32b6e75] Added new feature adr
+ 4 files changed, 671 insertions(+), 2 deletions(-)
+ create mode 100644 tests/test_load_current_adrs.py
+ create mode 100644 webservices/legal_docs/current_adrs.py
+###########################################################################################################################
+### check if your commit was successful.
+pkasireddy@F604486:~/openFEC$ git log
+commit 32b6e758ab267280f71442fe945a9e5683c49b29
+Author: pkfec <pkasireddy@fec.gov>
+Date:   Wed Jan 18 12:50:51 2017 -0500
+
+    Added new feature adr
+
+commit 397aa191617460784a0bf4081b270cf4de144942
+Merge: cf0b5cc b737cc1
+Author: Carlo Costino <ccostino@users.noreply.github.com>
+Date:   Thu Dec 29 17:49:19 2016 -0500
+
+    Merge pull request #2128 from 18F/feature/raw-sked-e-endpoint
+    
+    Feature/raw sked e endpoint
+
+commit b737cc129557e00b8080b13da0b938bab0ca65b9
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 17:34:12 2016 -0500
+
+    Added subset data, fixed n+1 error by commenting out join to get canidadate info, not a problem since that info was bonus as is
+
+commit f3fd56bafacccd74e596521c62dd818e2e5c9ec0
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 15:52:59 2016 -0500
+
+    Removed print statement and resolve MRO
+
+commit ec7b9517defb95dde3fac72349147bfb05655ee9
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+Date:   Thu Dec 29 15:39:01 2016 -0500
+
+    Added report_year column and corresponding cycle column (this was an added plus, wasn't specified in completion criteria)
+
+commit cf0b5cc25c80193500f6f12987ad819d0a7959cd
+Merge: f310a5c a6b55c4
+Author: Carlo Costino <ccostino@users.noreply.github.com>
+Date:   Thu Dec 29 13:36:08 2016 -0500
+
+    Merge pull request #2113 from 18F/feature/add-amended-flags
+    
+    Feature/add amended flags
+
+commit b1d4d226d96f51087d9bad5fc336baaca448f1af
+Author: Jonathan Carmack <jonathancarmack@C02QQ0N5FVH8.fios-router.home>
+pkasireddy@F604486:~/openFEC$ 
+###############################################################################################################################
+### push your local branch changes to origin (github repo)
+pkasireddy@F604486:~/openFEC$ git push -u origin feature/adrs 
+Counting objects: 9, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 7.13 KiB | 0 bytes/s, done.
+Total 9 (delta 6), reused 0 (delta 0)
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+To github.com:pkfec/openFEC.git
+ * [new branch]      feature/adrs -> feature/adrs
+Branch feature/adrs set up to track remote branch feature/adrs from origin.
+pkasireddy@F604486:~/openFEC$ 
+
+##################################################################################################
